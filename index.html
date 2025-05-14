@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminator Solver | Допомога з тестами на Naurok.ua</title>
+    <!-- Вбудовані стилі CSS -->
+    <style>
+        :root {
+            --bg-color: #1a0000; /* Дуже темний червоний/майже чорний фон */
+            --primary-color: #b71c1c; /* Глибокий насичений червоний */
+            --accent-color: #e53935; /* Яскравіший червоний для акцентів */
+            --text-color: #cccccc; /* Світло-сірий текст */
+            --white: #ffffff;
+            --padding-section: 80px 20px; /* Відступи для секцій */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Сучасний шрифт */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden; /* Запобігаємо горизонтальному прокручуванню від анімацій */
+            position: relative; /* Для можливих псевдоелементів або фонів */
+        }
+
+        /* Плавний скрол */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--white);
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.5); /* Напівпрозорий фон хедера */
+            padding: 20px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.8em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px var(--primary-color);
+            animation: pulse 2s infinite; /* Пульсуюча анімація заголовка */
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px var(--primary-color); }
+            50% { text-shadow: 0 0 20px var(--accent-color), 0 0 30px var(--primary-color); }
+            100% { text-shadow: 0 0 10px var(--primary-color); }
+        }
+
+        section {
+            padding: var(--padding-section);
+            text-align: center;
+            position: relative; /* Для анімацій */
+        }
+
+        #hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1600x800?text=Naurok+Test+Background') center center/cover; /* Фон (замініть на своє зображення) */
+            background-attachment: fixed; /* Ефект паралаксу */
+            color: var(--white);
+            padding: 180px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Висота секції - весь екран */
+        }
+
+        #hero h2 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(0,0,0,0.7);
+            animation: fadeInDown 1s ease-out; /* Анімація появи заголовка */
+        }
+
+        #hero p {
+            font-size: 1.4em;
+            margin-bottom: 40px;
+            max-width: 800px;
+            animation: fadeInUp 1.2s ease-out; /* Анімація появи тексту */
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 15px 35px;
+            font-size: 1.3em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: scaleUp 1.5s infinite alternate; /* Пульсуюча анімація кнопки */
+        }
+
+        .cta-button:hover {
+            background-color: #ff5252; /* Світліший червоний при наведенні */
+            transform: translateY(-5px) scale(1.02); /* Підняття та невелике збільшення */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            animation: none; /* Зупинити пульсацію при наведенні */
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+
+        h2 {
+            font-size: 3em;
+            color: var(--primary-color);
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -15px;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        #advantages .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .advantage-item {
+            background-color: #2a0000; /* Трохи світліший темний червоний */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 1px solid rgba(var(--primary-color), 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advantage-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 70%);
+            transition: left 0.6s ease;
+        }
+
+        .advantage-item:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+             border-color: var(--accent-color);
+        }
+         .advantage-item:hover::before {
+             left: 100%; /* Анімація блиску при наведенні */
+         }
+
+
+        .advantage-item .icon {
+             width: 70px;
+             height: 70px;
+             margin: 0 auto 25px auto;
+             color: var(--accent-color); /* Колір іконки */
+             stroke: var(--accent-color);
+             stroke-width: 2;
+             fill: none;
+        }
+         .advantage-item .icon svg {
+             width: 100%;
+             height: 100%;
+             display: block;
+         }
+
+
+        .advantage-item h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: var(--white);
+            text-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        .advantage-item p {
+            font-size: 1.1em;
+            color: var(--text-color);
+        }
+
+        #how-it-works .steps {
+             display: flex;
+             flex-wrap: wrap;
+             justify-content: center;
+             gap: 40px;
+        }
+
+        .step-item {
+             background-color: #2a0000;
+             padding: 35px;
+             border-radius: 8px;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+             max-width: 320px;
+             text-align: center;
+             transition: transform 0.3s ease, box-shadow 0.3s ease;
+              border: 1px solid rgba(var(--primary-color), 0.3);
+        }
+         .step-item:hover {
+             transform: translateY(-8px);
+             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+         }
+
+
+        .step-item .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 0 auto 20px auto;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 0 10px rgba(var(--accent-color), 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+         .step-item:hover .step-number {
+             transform: scale(1.1);
+             box-shadow: 0 0 15px rgba(var(--accent-color), 0.8);
+         }
+
+
+         .step-item p {
+             font-size: 1.2em;
+             color: var(--text-color);
+         }
+
+
+        #cta-bottom {
+            background-color: #2a0000;
+            padding: 80px 20px;
+            border-top: 2px solid var(--primary-color);
+        }
+
+         #cta-bottom h2 {
+             margin-bottom: 50px;
+             color: var(--white); /* Заголовок білий у цій секції */
+         }
+
+         #cta-bottom h2::after {
+             background-color: var(--white); /* Біла лінія під заголовком */
+         }
+
+
+        footer {
+            background-color: #0d0000; /* Ще темніший фон футера */
+            color: #777;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9em;
+        }
+
+        /* Анімації при скролінгу */
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px); /* Початкове положення нижче */
+            filter: blur(5px); /* Початковий розмитий стан */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out, filter 0.8s ease-out;
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+             #advantages .advantages-grid {
+                gap: 30px;
+            }
+            .advantage-item {
+                 padding: 30px;
+            }
+             .advantage-item .icon {
+                 width: 60px;
+                 height: 60px;
+             }
+             .advantage-item h3 {
+                font-size: 1.6em;
+             }
+             .advantage-item p {
+                 font-size: 1em;
+             }
+
+             .step-item {
+                 max-width: 300px;
+             }
+             .step-item .step-number {
+                 width: 50px;
+                 height: 50px;
+                 font-size: 1.8em;
+             }
+             .step-item p {
+                 font-size: 1.1em;
+             }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2em;
+            }
+
+            #hero {
+                padding: 120px 20px;
+                min-height: auto;
+            }
+
+            #hero h2 {
+                font-size: 2.8em;
+                margin-bottom: 15px;
+            }
+
+            #hero p {
+                 font-size: 1.2em;
+                 margin-bottom: 30px;
+            }
+
+            .cta-button {
+                 padding: 12px 25px;
+                 font-size: 1.1em;
+            }
+
+            h2 {
+                font-size: 2.2em;
+                 margin-bottom: 50px;
+            }
+
+             #advantages .advantages-grid {
+                gap: 25px;
+            }
+
+            .advantage-item {
+                 padding: 25px;
+            }
+
+            .advantage-item h3 {
+                 font-size: 1.4em;
+            }
+
+             .advantage-item .icon {
+                 width: 50px;
+                 height: 50px;
+                 margin-bottom: 20px;
+            }
+
+             #how-it-works .steps {
+                 gap: 25px;
+             }
+
+             .step-item {
+                 padding: 25px;
+                 max-width: 90%; /* Дозволити крокам займати більше ширини на маленьких екранах */
+             }
+
+             .step-item .step-number {
+                 width: 45px;
+                 height: 45px;
+                 font-size: 1.6em;
+                 margin-bottom: 15px;
+             }
+
+             .step-item p {
+                 font-size: 1em;
+             }
+
+             #cta-bottom {
+                 padding: 60px 20px;
+             }
+
+             #cta-bottom h2 {
+                  font-size: 2.2em;
+                  margin-bottom: 40px;
+             }
+        }
+
+         @media (max-width: 480px) {
+             header h1 {
+                 font-size: 1.8em;
+             }
+              #hero {
+                 padding: 80px 20px;
+              }
+             #hero h2 {
+                 font-size: 2.4em;
+             }
+             #hero p {
+                 font-size: 1em;
+             }
+              h2 {
+                 font-size: 2em;
+                 margin-bottom: 40px;
+             }
+             #advantages .advantages-grid {
+                gap: 20px;
+             }
+             .advantage-item {
+                padding: 20px;
+             }
+             .advantage-item h3 {
+                font-size: 1.3em;
+             }
+             .advantage-item .icon {
+                 width: 40px;
+                 height: 40px;
+             }
+             .step-item {
+                 padding: 20px;
+             }
+             .step-item .step-number {
+                 width: 40px;
+                 height: 40px;
+                 font-size: 1.5em;
+             }
+              #cta-bottom h2 {
+                  font-size: 2em;
+              }
+         }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Terminator Solver</h1>
+    </header>
+
+    <section id="hero">
+        <h2>Термінатор для тестів Naurok.ua</h2>
+        <p>Швидко, точно та непомітно проходьте будь-які тести на Naurok.ua. Ваш секрет успіху у навчанні.</p>
+        <a href="#advantages" class="cta-button">Дізнатись більше</a> <!-- Посилання на секцію переваг -->
+    </section>
+
+    <section id="advantages">
+        <h2>Наші Переваги</h2>
+        <div class="advantages-grid">
+
+            <!-- Перевага 1: Швидкість -->
+            <div class="advantage-item hidden">
+                <div class="icon">
+                     <!-- Feather Icons: zap -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <h3>Неймовірна Швидкість</h3>
+                <p>Отримуйте правильні відповіді за долі секунди, не витрачаючи час на пошук.</p>
+            </div>
+
+            <!-- Перевага 2: Точність -->
+            <div class="advantage-item hidden">
+                 <div class="icon">
+                     <!-- Feather Icons: check-circle -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                 </div>
+                <h3>Бездоганна Точність</h3>
+                <p>Гарантуємо високий відсоток правильних відповідей завдяки нашим алгоритмам.</p>
+            </div>
+
+            <!-- Перевага 3: Простота Використання -->
+            <div class="advantage-item hidden">
+                <div class="icon">
+                     <!-- Feather Icons: sliders -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                </div>
+                <h3>Максимальна Простота</h3>
+                <p>Простий інтерфейс та легке встановлення. Почніть використовувати за кілька кліків.</p>
+            </div>
+
+             <!-- Перевага 4: Невидимість -->
+            <div class="advantage-item hidden">
+                 <div class="icon">
+                    <!-- Feather Icons: eye-off -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                 </div>
+                <h3>Повна Невидимість</h3>
+                <p>Працює у фоновому режимі, не викликаючи підозр у системи Naurok.ua.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="how-it-works">
+        <h2>Як це працює?</h2>
+        <div class="steps">
+
+            <div class="step-item hidden">
+                <div class="step-number">1</div>
+                <p>Встановіть наш додаток або розширення для браузера.</p>
+            </div>
+
+            <div class="step-item hidden">
+                <div class="step-number">2</div>
+                <p>Відкрийте потрібний тест на сайті Naurok.ua.</p>
+            </div>
+
+            <div class="step-item hidden">
+                <div class="step-number">3</div>
+                <p>Terminator Solver автоматично покаже правильні відповіді.</p>
+            </div>
+
+        </div>
+    </section>
+
+     <section id="cta-bottom">
+        <h2>Готові отримати перевагу?</h2>
+        <a href="#" class="cta-button">Отримати доступ зараз!</a> <!-- Замініть # на реальне посилання для отримання -->
+    </section>
+
+    <footer>
+        <p>© 2023 Terminator Solver. Усі права захищено.</p>
+    </footer>
+
+    <!-- Вбудований JavaScript для анімації при скролінгу -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Створюємо IntersectionObserver для відстеження елементів
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Якщо елемент потрапив у видиму область
+                        entry.target.classList.add('visible');
+                        entry.target.classList.remove('hidden');
+                        // Перестати відстежувати цей елемент після першого спрацьовування
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2, // Спрацьовує, коли 20% елемента видно
+                 rootMargin: '0px 0px -50px 0px' // Нижній відступ, щоб спрацьовувало трохи раніше
+            });
+
+            // Вибираємо елементи, які потрібно анімувати
+            // Додаємо клас .hidden до них та починаємо відстежувати
+            const elementsToAnimate = document.querySelectorAll('#advantages .advantage-item, #how-it-works .step-item, #cta-bottom');
+
+            elementsToAnimate.forEach(element => {
+                element.classList.add('hidden'); // Початково приховуємо їх
+                observer.observe(element); // Починаємо відстеження
+            });
+
+             // Анімація для елементів Hero секції (вони вже анімуються через keyframes)
+             // Можна додати їх сюди, якщо потрібна анімація при скролі, а не при завантаженні
+             // const heroElements = document.querySelectorAll('#hero h2, #hero p, #hero .cta-button');
+             // heroElements.forEach(element => {
+             //     element.classList.add('hidden'); // Початково приховуємо їх
+             //     observer.observe(element); // Починаємо відстеження
+             // });
+        });
+    </script>
+
+</body>
+</html>
